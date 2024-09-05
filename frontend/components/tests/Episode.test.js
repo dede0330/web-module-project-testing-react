@@ -26,29 +26,35 @@ their own search, and meet a mysterious girl in the forest.",
 describe('Episode component', () => {
   test("renders without error", () => {
     // 👉 TASK: render the component passing episode data
-
+    render (<Episode episode={ exampleEpisodeData } />)
     // 👉 TASK: print the simulated DOM using screen.debug
+    screen.debug()
 
   })
   test("renders texts and alt texts correctly", () => {
     // 👉 TASK: render the component passing episode data and getting the rerender utility
-
+    const { rerender }=render (<Episode episode={ exampleEpisodeData } />)
     // 👉 TASK: check that the summary renders to the DOM
-
+    screen.getByText(exampleEpisodeData.summary)
     // 👉 TASK: check that the alt text "episode image" is present
-
-    // 👉 TASK: rerender the component passing episode data lacking an image
-    // ❗ Study the Episode component to understand what happens in this case
-
-    // 👉 TASK: check that the default image appears in the DOM
-    // ❗ Use querySelector to select the image by its src attribute
-
-    // 👉 TASK: check that the "generic episode image" alt text is present
-
-    // 👉 TASK: rerender the component passing an undefined episode
-    // ❗ Study the Episode component to understand what happens in this case
-
-    // 👉 TASK: check that the "Loading episode..." text is present
-
-  })
-})
+    screen.getByAltText("episode image")
+     // 👉 TASK: rerender the component passing episode data lacking an image
+     const {image,...rest} = exampleEpisodeData
+     rerender(<Episode episode={rest} />)
+     // ❗ Study the Episode component to understand what happens in this case
+     expect (document.querySelector('img[src="https://static.tvmaze.com/uploads/images/medium_landscape/342/855786.jpg"]')
+   )
+     
+     screen.getByAltText('generic episode image')
+     // 👉 TASK: check that the default image appears in the DOM
+     // ❗ Use querySelector to select the image by its src attribute
+ rerender(<Episode />)
+     // 👉 TASK: check that the "generic episode image" alt text is present
+ 
+     // 👉 TASK: rerender the component passing an undefined episode
+     // ❗ Study the Episode component to understand what happens in this case
+ screen.getByText("Loading episode...")
+     // 👉 TASK: check that the "Loading episode..." text is present
+ 
+   })
+ })
